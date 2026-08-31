@@ -1,0 +1,16 @@
+node_modules/
+npm-debug.log
+.DS_Store
+dist/
+build/
+.cache/
+.next/
+.nuxt/
+out/
+dist
+.cache
+.vercel
+.output
+.env
+.env.local
+.env.*.local
