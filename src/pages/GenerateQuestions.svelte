@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import Layout from "../components/Layout.svelte";
   import apiClient, { type Topic } from "../api/client";
-  import { formatDateTime } from "../utils/helpers";
 
   let topics: Topic[] = [];
   let selectedTopicId: number | null = null;
@@ -80,22 +79,41 @@
 </script>
 
 <Layout title="Generate Questions">
-  <div class="container">
-    <div class="form-card">
-      <h2>Generate Questions from PDF or Text</h2>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Generator Form Card -->
+    <div class="lg:col-span-5 bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8 h-fit">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-gray-900">AI Question Generator</h2>
+        <p class="text-sm text-gray-500 mt-1">
+          Generate quiz questions automatically from a selected topic or an uploaded PDF document.
+        </p>
+      </div>
 
       {#if error}
-        <div class="error-message">{error}</div>
+        <div class="mb-5 p-4 bg-danger-light border border-red-200 text-danger text-sm rounded-xl flex items-center space-x-2">
+          <span>⚠️</span>
+          <span>{error}</span>
+        </div>
       {/if}
 
       {#if success}
-        <div class="success-message">{success}</div>
+        <div class="mb-5 p-4 bg-success-light border border-green-200 text-success text-sm rounded-xl flex items-center space-x-2">
+          <span>✅</span>
+          <span>{success}</span>
+        </div>
       {/if}
 
-      <form on:submit|preventDefault={handleGenerate}>
-        <div class="form-group">
-          <label for="topic">Select Topic *</label>
-          <select id="topic" bind:value={selectedTopicId} required>
+      <form on:submit|preventDefault={handleGenerate} class="space-y-5">
+        <div>
+          <label for="topic" class="block text-sm font-semibold text-gray-700 mb-1.5">
+            Select Topic <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="topic"
+            bind:value={selectedTopicId}
+            required
+            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+          >
             <option value={null}>-- Choose a topic --</option>
             {#each topics as topic}
               <option value={topic.id}>{topic.name}</option>
@@ -103,8 +121,10 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="num-questions">Number of Questions *</label>
+        <div>
+          <label for="num-questions" class="block text-sm font-semibold text-gray-700 mb-1.5">
+            Number of Questions <span class="text-red-500">*</span>
+          </label>
           <input
             id="num-questions"
             type="number"
@@ -112,256 +132,105 @@
             min="1"
             max="50"
             required
+            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
           />
-          <small>Between 1 and 50 questions</small>
+          <span class="text-xs text-gray-400 mt-1 block">Between 1 and 50 questions</span>
         </div>
 
-        <div class="form-group">
-          <label for="file">Upload PDF File (Optional)</label>
-          <div class="file-input-wrapper">
+        <div>
+          <label for="file" class="block text-sm font-semibold text-gray-700 mb-1.5">
+            Upload PDF File <span class="text-xs font-normal text-gray-400">(Optional)</span>
+          </label>
+          <div class="relative">
             <input
               id="file"
               type="file"
               accept=".pdf"
               on:change={handleFileChange}
               disabled={loading}
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-light file:text-primary hover:file:bg-primary hover:file:text-white file:cursor-pointer file:transition-all border border-gray-300 rounded-lg bg-gray-50 p-1"
             />
-            <span class="file-name">
-              {selectedFile ? selectedFile.name : "No file selected"}
-            </span>
           </div>
-          <small>Maximum file size: 10MB</small>
+          <span class="text-xs text-gray-400 mt-1 block">Maximum file size: 10MB (PDF only)</span>
         </div>
 
-        <button type="submit" class="btn-primary" disabled={loading}>
-          {loading ? "Generating..." : "Generate Questions"}
+        <button
+          type="submit"
+          disabled={loading}
+          class="w-full py-3.5 px-4 bg-primary hover:bg-primary-hover disabled:opacity-60 text-white font-semibold rounded-xl shadow-md shadow-primary/30 transition-all duration-150 flex items-center justify-center space-x-2 cursor-pointer disabled:cursor-not-allowed"
+        >
+          {#if loading}
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Generating Questions...</span>
+          {:else}
+            <span>✨ Generate Questions</span>
+          {/if}
         </button>
       </form>
     </div>
 
-    {#if generatedQuestions.length > 0}
-      <div class="results-card">
-        <h2>Generated Questions</h2>
-        <div class="questions-list">
-          {#each generatedQuestions as question, idx}
-            <div class="question-item">
-              <div class="question-number">Q{idx + 1}</div>
-              <div class="question-content">
-                <p class="question-text">{question.text}</p>
+    <!-- Results Card -->
+    <div class="lg:col-span-7">
+      {#if generatedQuestions.length > 0}
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+            <h2 class="text-xl font-bold text-gray-900">
+              Generated Results ({generatedQuestions.length})
+            </h2>
+            <span class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-800 rounded-full">
+              Success
+            </span>
+          </div>
+
+          <div class="space-y-4">
+            {#each generatedQuestions as question, idx}
+              <div class="p-5 bg-gray-50 border-l-4 border-primary rounded-r-xl space-y-3">
+                <div class="flex items-start space-x-3">
+                  <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-white text-xs font-bold shrink-0 mt-0.5">
+                    {idx + 1}
+                  </span>
+                  <p class="text-sm font-semibold text-gray-900 leading-relaxed">
+                    {question.text}
+                  </p>
+                </div>
+
                 {#if question.options}
-                  <div class="options">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-10">
                     {#each question.options as option, optIdx}
-                      <div class="option">
-                        <span class="option-label"
-                          >{String.fromCharCode(65 + optIdx)}.</span
-                        >
+                      <div class="flex items-start space-x-2 p-2.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-700">
+                        <span class="font-bold text-primary">
+                          {String.fromCharCode(65 + optIdx)}.
+                        </span>
                         <span>{option}</span>
                       </div>
                     {/each}
                   </div>
                 {/if}
+
                 {#if question.answer}
-                  <p class="answer">
-                    <strong>Answer:</strong>
-                    {question.answer}
-                  </p>
+                  <div class="pl-10">
+                    <div class="p-3 bg-success-light border border-green-200 rounded-lg text-xs text-green-900 flex items-center space-x-2">
+                      <span class="font-bold">Correct Answer:</span>
+                      <span>{question.answer}</span>
+                    </div>
+                  </div>
                 {/if}
               </div>
-            </div>
-          {/each}
+            {/each}
+          </div>
         </div>
-      </div>
-    {/if}
+      {:else}
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center flex flex-col items-center justify-center h-full min-h-[300px]">
+          <span class="text-5xl mb-4">💡</span>
+          <h3 class="text-lg font-bold text-gray-800 mb-1">No Questions Generated Yet</h3>
+          <p class="text-sm text-gray-500 max-w-sm">
+            Select a topic on the left and click "Generate Questions" to create AI-powered quizzes.
+          </p>
+        </div>
+      {/if}
+    </div>
   </div>
 </Layout>
-
-<style>
-  .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .form-card,
-  .results-card {
-    background: white;
-    border-radius: var(--radius);
-    padding: 24px;
-    box-shadow: var(--shadow);
-  }
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: var(--primary);
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  select,
-  input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: 14px;
-  }
-
-  select:focus,
-  input[type="number"]:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
-  }
-
-  small {
-    display: block;
-    margin-top: 4px;
-    color: #666;
-    font-size: 12px;
-  }
-
-  .file-input-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    width: 100%;
-  }
-
-  input[type="file"] {
-    position: absolute;
-    left: -9999px;
-  }
-
-  input[type="file"] + .file-name {
-    display: block;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    cursor: pointer;
-    color: #666;
-  }
-
-  input[type="file"]:hover + .file-name {
-    background-color: #e8e8e8;
-  }
-
-  .btn-primary {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    background-color: #2952a3;
-  }
-
-  .btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .error-message {
-    background-color: #ffe6e6;
-    color: var(--danger);
-    padding: 12px;
-    border-radius: var(--radius);
-    margin-bottom: 20px;
-  }
-
-  .success-message {
-    background-color: #e6ffe6;
-    color: var(--success);
-    padding: 12px;
-    border-radius: var(--radius);
-    margin-bottom: 20px;
-  }
-
-  .questions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .question-item {
-    display: flex;
-    gap: 12px;
-    padding: 16px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    border-left: 4px solid var(--primary);
-  }
-
-  .question-number {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    background-color: var(--primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-  }
-
-  .question-content {
-    flex: 1;
-  }
-
-  .question-text {
-    margin: 0 0 12px 0;
-    font-weight: 500;
-  }
-
-  .options {
-    margin: 12px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .option {
-    display: flex;
-    gap: 8px;
-    padding: 8px;
-    background-color: white;
-    border-radius: 4px;
-  }
-
-  .option-label {
-    font-weight: 600;
-    color: var(--primary);
-  }
-
-  .answer {
-    margin: 12px 0 0 0;
-    padding: 8px;
-    background-color: #e6ffe6;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-
-  @media (max-width: 1024px) {
-    .container {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

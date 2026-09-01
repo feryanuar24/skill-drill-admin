@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 import axios, { AxiosInstance, AxiosError } from "axios";
+import { logout } from "../stores/auth";
+import { replace } from "svelte-spa-router";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8080/api";
@@ -88,13 +90,8 @@ class ApiClient {
       (error: AxiosError) => {
         if (error.response?.status === 401) {
           this.clearToken();
-          // Import logout here to avoid circular dependency
-          import("../stores/auth").then((authModule) => {
-            authModule.logout();
-            import("../stores/router").then((router) => {
-              router.navigate("login");
-            });
-          });
+          logout();
+          replace("/login");
         }
         return Promise.reject(error);
       },

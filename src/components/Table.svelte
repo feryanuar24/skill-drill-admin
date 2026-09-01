@@ -13,112 +13,62 @@
   export let onDelete: (row: any) => void = () => {};
 </script>
 
-<div class="table-container">
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
   {#if loading}
-    <div class="loading">Loading...</div>
+    <div class="py-16 flex flex-col items-center justify-center text-gray-500 space-y-3">
+      <svg class="animate-spin h-8 w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span class="text-sm font-medium">Loading data...</span>
+    </div>
   {:else if rows.length === 0}
-    <div class="empty">No data available</div>
+    <div class="py-16 flex flex-col items-center justify-center text-gray-500 space-y-2">
+      <span class="text-4xl">📭</span>
+      <p class="text-base font-medium text-gray-600">No data available</p>
+      <p class="text-xs text-gray-400">There are no records to display at this moment.</p>
+    </div>
   {:else}
-    <table>
-      <thead>
-        <tr>
-          {#each columns as col}
-            <th style:width={col.width || "auto"}>{col.label}</th>
-          {/each}
-          <th style:width="150px">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each rows as row}
-          <tr>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
             {#each columns as col}
-              <td>{row[col.key]}</td>
+              <th class="py-3.5 px-4 sm:px-6" style:width={col.width || "auto"}>
+                {col.label}
+              </th>
             {/each}
-            <td class="actions">
-              <button class="btn-sm btn-primary" on:click={() => onEdit(row)}
-                >Edit</button
-              >
-              <button class="btn-sm btn-danger" on:click={() => onDelete(row)}
-                >Delete</button
-              >
-            </td>
+            <th class="py-3.5 px-4 sm:px-6 text-right w-40">Actions</th>
           </tr>
-        {/each}
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
+          {#each rows as row}
+            <tr class="hover:bg-gray-50/80 transition-colors">
+              {#each columns as col}
+                <td class="py-4 px-4 sm:px-6">
+                  {row[col.key] !== undefined && row[col.key] !== null ? row[col.key] : "-"}
+                </td>
+              {/each}
+              <td class="py-4 px-4 sm:px-6 text-right">
+                <div class="flex items-center justify-end space-x-2">
+                  <button
+                    class="px-3 py-1.5 text-xs font-medium text-primary bg-primary-light hover:bg-primary hover:text-white rounded-lg transition-colors cursor-pointer"
+                    on:click={() => onEdit(row)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    class="px-3 py-1.5 text-xs font-medium text-danger bg-danger-light hover:bg-danger hover:text-white rounded-lg transition-colors cursor-pointer"
+                    on:click={() => onDelete(row)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
   {/if}
 </div>
-
-<style>
-  .table-container {
-    background: white;
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  thead {
-    background-color: var(--primary);
-    color: white;
-  }
-
-  th {
-    padding: 16px;
-    text-align: left;
-    font-weight: 600;
-    border-bottom: 2px solid var(--primary);
-  }
-
-  td {
-    padding: 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-
-  .actions {
-    display: flex;
-    gap: 8px;
-  }
-
-  .btn-sm {
-    padding: 6px 12px;
-    font-size: 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background-color: #2952a3;
-  }
-
-  .btn-danger {
-    background-color: var(--danger);
-    color: white;
-  }
-
-  .btn-danger:hover {
-    background-color: #bb2222;
-  }
-
-  .loading,
-  .empty {
-    padding: 40px;
-    text-align: center;
-    color: #666;
-  }
-</style>

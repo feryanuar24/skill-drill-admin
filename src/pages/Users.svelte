@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import Layout from "../components/Layout.svelte";
   import Table from "../components/Table.svelte";
-  import apiClient, { type User, type CreateUserRequest } from "../api/client";
+  import apiClient, { type User } from "../api/client";
   import { formatDateTime } from "../utils/helpers";
   import UserForm from "../components/UserForm.svelte";
 
@@ -78,12 +78,12 @@
   const columns = [
     { key: "username", label: "Username" },
     { key: "email", label: "Email" },
-    { key: "role", label: "Role" },
-    { key: "is_verified", label: "Verified" },
-    { key: "created_at", label: "Created At" },
+    { key: "role", label: "Role", width: "120px" },
+    { key: "is_verified", label: "Verified", width: "100px" },
+    { key: "created_at", label: "Created At", width: "180px" },
   ];
 
-  const displayRows = users.map((u) => ({
+  $: displayRows = users.map((u) => ({
     ...u,
     is_verified: u.is_verified ? "Yes" : "No",
     created_at: formatDateTime(u.created_at),
@@ -91,12 +91,24 @@
 </script>
 
 <Layout title="Users Management">
-  <div class="header">
-    <button class="btn-primary" on:click={handleAddNew}>+ Add New User</button>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <p class="text-sm text-gray-500">
+      Manage registered students and administrator accounts.
+    </p>
+    <button
+      class="inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+      on:click={handleAddNew}
+    >
+      <span>➕</span>
+      <span>Add New User</span>
+    </button>
   </div>
 
   {#if error}
-    <div class="error-message">{error}</div>
+    <div class="mb-6 p-4 bg-danger-light border border-red-200 text-danger text-sm rounded-xl flex items-center space-x-2">
+      <span>⚠️</span>
+      <span>{error}</span>
+    </div>
   {/if}
 
   {#if showForm}
@@ -115,35 +127,3 @@
     onDelete={handleDelete}
   />
 </Layout>
-
-<style>
-  .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary:hover {
-    background-color: #2952a3;
-  }
-
-  .error-message {
-    background-color: #ffe6e6;
-    color: var(--danger);
-    padding: 12px;
-    border-radius: var(--radius);
-    margin-bottom: 20px;
-  }
-</style>

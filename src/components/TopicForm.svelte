@@ -23,11 +23,11 @@
   function validateForm(): boolean {
     errors = {};
 
-    if (!formData.name) {
+    if (!formData.name.trim()) {
       errors.name = "Topic name is required";
     }
 
-    if (!formData.description) {
+    if (!formData.description.trim()) {
       errors.description = "Description is required";
     }
 
@@ -47,165 +47,84 @@
   }
 </script>
 
-<div class="modal-overlay" on:click={handleClose} role="presentation">
-  <div class="modal-content" on:click|stopPropagation role="presentation">
-    <div class="modal-header">
-      <h2>{topic ? "Edit Topic" : "Add New Topic"}</h2>
-      <button class="btn-close" on:click={handleClose}>×</button>
+<div
+  class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+  on:click={handleClose}
+  role="presentation"
+>
+  <div
+    class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all"
+    on:click|stopPropagation
+    role="presentation"
+  >
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+      <h2 class="text-xl font-bold text-gray-900">
+        {topic ? "Edit Topic" : "Add New Topic"}
+      </h2>
+      <button
+        class="text-gray-400 hover:text-gray-600 rounded-lg p-1 text-2xl leading-none transition-colors cursor-pointer"
+        on:click={handleClose}
+        aria-label="Close"
+      >
+        &times;
+      </button>
     </div>
 
-    <form on:submit|preventDefault={handleSubmit}>
-      <div class="form-group">
-        <label for="name">Topic Name</label>
+    <!-- Modal Form -->
+    <form on:submit|preventDefault={handleSubmit} class="p-6 space-y-5">
+      <div>
+        <label for="name" class="block text-sm font-semibold text-gray-700 mb-1.5">
+          Topic Name <span class="text-red-500">*</span>
+        </label>
         <input
           id="name"
           type="text"
           bind:value={formData.name}
-          placeholder="Enter topic name"
+          placeholder="e.g. Data Structures & Algorithms"
+          class="w-full px-3.5 py-2.5 bg-gray-50 border rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none transition-all {errors.name
+            ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+            : 'border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'}"
         />
         {#if errors.name}
-          <span class="error">{errors.name}</span>
+          <p class="mt-1 text-xs text-red-600">{errors.name}</p>
         {/if}
       </div>
 
-      <div class="form-group">
-        <label for="description">Description</label>
+      <div>
+        <label for="description" class="block text-sm font-semibold text-gray-700 mb-1.5">
+          Description <span class="text-red-500">*</span>
+        </label>
         <textarea
           id="description"
           bind:value={formData.description}
-          placeholder="Enter topic description"
+          placeholder="Enter a brief overview of this learning topic..."
           rows="4"
+          class="w-full px-3.5 py-2.5 bg-gray-50 border rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none transition-all {errors.description
+            ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+            : 'border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'}"
         />
         {#if errors.description}
-          <span class="error">{errors.description}</span>
+          <p class="mt-1 text-xs text-red-600">{errors.description}</p>
         {/if}
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn-secondary" on:click={handleClose}
-          >Cancel</button
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100">
+        <button
+          type="button"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer"
+          on:click={handleClose}
         >
-        <button type="submit" class="btn-primary">Save</button>
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-5 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-hover rounded-lg shadow-sm transition-colors cursor-pointer"
+        >
+          Save Topic
+        </button>
       </div>
     </form>
   </div>
 </div>
-
-<style>
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-  }
-
-  .modal-content {
-    background: white;
-    border-radius: var(--radius);
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  .modal-header h2 {
-    margin: 0;
-    color: var(--primary);
-  }
-
-  .btn-close {
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: #999;
-  }
-
-  .btn-close:hover {
-    color: #333;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: 14px;
-    font-family: inherit;
-  }
-
-  input:focus,
-  textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
-  }
-
-  .error {
-    color: var(--danger);
-    font-size: 12px;
-    display: block;
-    margin-top: 4px;
-  }
-
-  .modal-footer {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 30px;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background-color: #2952a3;
-  }
-
-  .btn-secondary {
-    background-color: var(--border);
-    color: var(--text);
-  }
-
-  .btn-secondary:hover {
-    background-color: #ccc;
-  }
-</style>

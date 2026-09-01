@@ -1,108 +1,42 @@
 <script lang="ts">
   import { isLoggedIn } from "../stores/auth";
-  import { navigate } from "../stores/router";
+  import { link } from "svelte-spa-router";
 </script>
 
-<div class="landing-container">
-  <div class="landing-card">
-    <div class="logo-container">
-      <span class="logo-icon">🎯</span>
-      <h1>Skill Drill Admin</h1>
+<div class="min-h-screen bg-linear-to-br from-primary via-blue-600 to-indigo-800 flex items-center justify-center p-4 sm:p-6">
+  <div class="bg-white rounded-2xl shadow-elevated w-full max-w-lg p-8 sm:p-10 text-center transform transition-all">
+    <div class="flex flex-col items-center mb-6">
+      <div class="w-16 h-16 bg-primary-light rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-inner">
+        🎯
+      </div>
+      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Skill Drill Admin</h1>
+      <p class="text-xs uppercase tracking-widest font-semibold text-primary mt-1">Management Portal</p>
     </div>
 
-    <p class="description">
-      Welcome to the Skill Drill administration portal. Manage users, curate
-      learning topics, and generate questions using AI.
+    <p class="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+      Welcome to the Skill Drill administration portal. Manage users, curate learning topics, and generate questions using AI.
     </p>
 
-    <div class="actions">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
       {#if $isLoggedIn}
-        <button class="btn btn-primary" on:click={() => navigate("/dashboard")}>
-          Go to Dashboard 📊
-        </button>
+        <a
+          href="/dashboard"
+          use:link
+          class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 transform hover:-translate-y-0.5 transition-all duration-150"
+        >
+          <span>Go to Dashboard</span>
+          <span class="ml-2">📊</span>
+        </a>
       {:else}
-        <button class="btn btn-primary" on:click={() => navigate("/login")}>
-          Login to Admin Panel 🔑
-        </button>
+        <a
+          href="/login"
+          use:link
+          class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 transform hover:-translate-y-0.5 transition-all duration-150"
+        >
+          <span>Login to Admin Panel</span>
+          <span class="ml-2">🔑</span>
+        </a>
       {/if}
     </div>
   </div>
 </div>
-
-<style>
-  .landing-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(
-      135deg,
-      var(--primary) 0%,
-      var(--secondary) 100%
-    );
-    padding: 20px;
-    font-family: inherit;
-  }
-
-  .landing-card {
-    background: white;
-    border-radius: var(--radius);
-    padding: 40px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-
-  .logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  .logo-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
-  }
-
-  h1 {
-    font-size: 32px;
-    color: var(--primary);
-    margin: 0;
-  }
-
-  .description {
-    color: #555;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 32px;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center;
-  }
-
-  .btn {
-    padding: 12px 32px;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: white;
-    box-shadow: 0 4px 12px rgba(51, 102, 204, 0.3);
-  }
-
-  .btn-primary:hover {
-    background-color: #2952a3;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(51, 102, 204, 0.4);
-  }
-</style>

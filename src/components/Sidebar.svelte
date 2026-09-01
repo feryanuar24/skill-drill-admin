@@ -1,197 +1,113 @@
 <script lang="ts">
   import { currentUser, logout } from "../stores/auth";
-  import { navigate } from "../stores/router";
-  import { currentPage } from "../stores/router";
+  import { location, link, replace } from "svelte-spa-router";
 
   let showMobileMenu = false;
 
   function handleLogout() {
     logout();
-    navigate("/login");
+    replace("/login");
   }
 
-  function handleNavigation(page: string, event: Event) {
-    event.preventDefault();
-    navigate(`/${page}`);
-    showMobileMenu = false;
-  }
+  const navItems = [
+    { path: "/dashboard", label: "Dashboard", icon: "📊" },
+    { path: "/users", label: "Users", icon: "👥" },
+    { path: "/topics", label: "Topics", icon: "📚" },
+    { path: "/generate-questions", label: "Generate Questions", icon: "❓" },
+  ];
 </script>
 
-<nav class="sidebar">
-  <div class="logo">
-    <h1>Admin Panel</h1>
+<aside
+  class="fixed top-0 left-0 z-40 w-64 h-screen bg-primary text-white flex flex-col shadow-lg transition-transform duration-200 ease-in-out md:translate-x-0 {!showMobileMenu
+    ? '-translate-x-full md:translate-x-0'
+    : 'translate-x-0'}"
+>
+  <!-- Brand Logo -->
+  <div class="h-16 flex items-center justify-between px-6 border-b border-white/10">
+    <div class="flex items-center space-x-3">
+      <span class="text-2xl">🎯</span>
+      <h1 class="text-xl font-bold tracking-wide">Skill Drill</h1>
+    </div>
+    <button
+      class="md:hidden text-white/80 hover:text-white p-1"
+      on:click={() => (showMobileMenu = false)}
+      aria-label="Close Sidebar"
+    >
+      ✕
+    </button>
   </div>
 
-  <ul class="menu">
-    <li>
+  <!-- Navigation Menu -->
+  <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
+    {#each navItems as item}
       <a
-        href="/"
-        on:click={(e) => handleNavigation("dashboard", e)}
-        class:active={$currentPage === "dashboard"}
+        href={item.path}
+        use:link
+        on:click={() => (showMobileMenu = false)}
+        class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-150 {$location ===
+        item.path
+          ? 'bg-white/20 text-white font-semibold shadow-sm'
+          : 'text-white/80 hover:bg-white/10 hover:text-white'}"
       >
-        📊 Dashboard
+        <span class="text-lg">{item.icon}</span>
+        <span>{item.label}</span>
       </a>
-    </li>
-    <li>
-      <a
-        href="/users"
-        on:click={(e) => handleNavigation("users", e)}
-        class:active={$currentPage === "users"}
-      >
-        👥 Users
-      </a>
-    </li>
-    <li>
-      <a
-        href="/topics"
-        on:click={(e) => handleNavigation("topics", e)}
-        class:active={$currentPage === "topics"}
-      >
-        📚 Topics
-      </a>
-    </li>
-    <li>
-      <a
-        href="/generate-questions"
-        on:click={(e) => handleNavigation("generate-questions", e)}
-        class:active={$currentPage === "generate-questions"}
-      >
-        ❓ Generate Questions
-      </a>
-    </li>
-  </ul>
+    {/each}
+  </nav>
 
-  <div class="user-section">
-    <p class="user-name">{$currentUser?.username || "Admin"}</p>
-    <button class="btn-logout" on:click={handleLogout}>Logout</button>
+  <!-- User & Logout Section -->
+  <div class="p-4 border-t border-white/10 bg-black/10">
+    <div class="flex items-center justify-between mb-3 px-2">
+      <div class="flex flex-col min-w-0">
+        <span class="text-xs text-white/60 font-medium uppercase tracking-wider">Signed in as</span>
+        <span class="text-sm font-semibold truncate">{$currentUser?.username || "Admin"}</span>
+      </div>
+    </div>
+    <button
+      on:click={handleLogout}
+      class="w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-white/10 hover:bg-red-500/80 text-white text-sm font-medium rounded-lg border border-white/20 transition duration-150 cursor-pointer"
+    >
+      <span>🚪</span>
+      <span>Logout</span>
+    </button>
   </div>
-</nav>
+</aside>
 
-<style>
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: var(--primary);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
+<!-- Mobile Overlay Backdrop -->
+{#if showMobileMenu}
+  <div
+    class="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden"
+    on:click={() => (showMobileMenu = false)}
+    role="presentation"
+  ></div>
+{/if}
 
-  .logo {
-    padding: 20px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .logo h1 {
-    font-size: 20px;
-    margin: 0;
-  }
-
-  .menu {
-    list-style: none;
-    flex: 1;
-    padding: 20px 0;
-    overflow-y: auto;
-  }
-
-  .menu li {
-    margin: 0;
-  }
-
-  .menu a {
-    display: block;
-    padding: 15px 20px;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: all 0.2s;
-    border-left: 4px solid transparent;
-  }
-
-  .menu a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-  }
-
-  .menu a.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-left-color: white;
-  }
-
-  .user-section {
-    padding: 20px;
-    border-top: 2px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .user-name {
-    margin: 0 0 12px 0;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  .btn-logout {
-    width: 100%;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 14px;
-  }
-
-  .btn-logout:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-    }
-
-    .logo {
-      padding: 0;
-      border: none;
-      margin-right: auto;
-    }
-
-    .logo h1 {
-      font-size: 16px;
-    }
-
-    .menu {
-      display: none;
-      padding: 0;
-    }
-
-    .user-section {
-      padding: 0;
-      border: none;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .user-name {
-      margin: 0;
-      display: none;
-    }
-
-    .btn-logout {
-      width: auto;
-      padding: 8px 16px;
-    }
-  }
-</style>
+<!-- Mobile Topbar Header -->
+<div
+  class="md:hidden fixed top-0 left-0 right-0 z-20 h-16 bg-primary text-white flex items-center justify-between px-4 shadow-md"
+>
+  <button
+    on:click={() => (showMobileMenu = true)}
+    class="p-2 rounded-md hover:bg-white/10 focus:outline-none cursor-pointer"
+    aria-label="Open Sidebar"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </button>
+  <div class="flex items-center space-x-2">
+    <span>🎯</span>
+    <span class="font-bold">Skill Drill Admin</span>
+  </div>
+  <button
+    on:click={handleLogout}
+    class="text-xs bg-white/10 hover:bg-red-500/80 px-3 py-1.5 rounded border border-white/20 cursor-pointer"
+  >
+    Logout
+  </button>
+</div>

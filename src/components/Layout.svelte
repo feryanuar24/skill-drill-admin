@@ -1,40 +1,20 @@
 <script lang="ts">
+  import Sidebar from "./Sidebar.svelte";
   export let title = "";
 </script>
 
-<div class="layout">
-  <div class="content">
-    {#if title}
-      <h1 class="page-title">{title}</h1>
-    {/if}
-    <slot />
+<div class="min-h-screen bg-gray-100 flex">
+  <Sidebar />
+  <div class="flex-1 md:ml-64 min-h-screen flex flex-col pt-16 md:pt-0">
+    <main class="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto">
+      {#if title}
+        <div class="mb-6">
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+            {title}
+          </h1>
+        </div>
+      {/if}
+      <slot />
+    </main>
   </div>
 </div>
-
-<style>
-  .layout {
-    margin-left: 250px;
-    padding: 20px;
-    min-height: 100vh;
-    background-color: var(--bg);
-  }
-
-  .page-title {
-    font-size: 28px;
-    margin-bottom: 24px;
-    color: var(--primary);
-  }
-
-  @media (max-width: 768px) {
-    .layout {
-      margin-left: 0;
-      margin-top: 60px;
-      padding: 15px;
-    }
-
-    .page-title {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-  }
-</style>
