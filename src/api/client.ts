@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import axios, { AxiosInstance, AxiosError } from "axios";
 import { logout } from "../stores/auth";
-import { replace } from "svelte-spa-router";
+import { replace } from "../stores/routerCompat";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8080/api";

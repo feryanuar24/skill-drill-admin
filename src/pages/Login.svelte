@@ -1,7 +1,7 @@
 <script lang="ts">
   import apiClient, { type LoginResponse } from "../api/client";
   import { login } from "../stores/auth";
-  import { replace, link } from "svelte-spa-router";
+  import { replace, link } from "../stores/routerCompat";
 
   let email = "";
   let password = "";

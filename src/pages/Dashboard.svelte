@@ -3,7 +3,7 @@
   import Layout from "../components/Layout.svelte";
   import apiClient from "../api/client";
   import { currentUser } from "../stores/auth";
-  import { link } from "svelte-spa-router";
+  import { link } from "../stores/routerCompat";
 
   let userCount = 0;
   let topicCount = 0;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { isLoggedIn } from "../stores/auth";
-  import { link } from "svelte-spa-router";
+  import { link } from "../stores/routerCompat";
 </script>
 
 <div

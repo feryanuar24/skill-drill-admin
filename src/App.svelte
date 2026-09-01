@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import Router, { replace } from "svelte-spa-router";
-  import { wrap } from "svelte-spa-router/wrap";
+  import { Router, Route, navigate, links } from "svelte-routing";
   import { initializeAuth } from "./stores/auth";
   import Dashboard from "./pages/Dashboard.svelte";
   import Users from "./pages/Users.svelte";
@@ -10,54 +9,43 @@
   import Login from "./pages/Login.svelte";
   import Landing from "./pages/Landing.svelte";
 
+  export let url = "";
+
   onMount(() => {
     initializeAuth();
   });
 
-  function requireAuth(): boolean {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      replace("/login");
-      return false;
-    }
-    return true;
-  }
+  // Simple reactive guard logic instead of wrap
+  let currentPath = window.location.pathname;
 
-  function redirectIfAuth(): boolean {
+  $: {
     const token = localStorage.getItem("token");
-    if (token) {
-      replace("/dashboard");
-      return false;
+    if (currentPath === "/login" && token) {
+      navigate("/dashboard", { replace: true });
+    } else if (
+      ["/dashboard", "/users", "/topics", "/generate-questions"].includes(
+        currentPath,
+      ) &&
+      !token
+    ) {
+      navigate("/login", { replace: true });
     }
-    return true;
   }
-
-  const routes = {
-    "/": Landing,
-    "/login": wrap({
-      component: Login,
-      conditions: [redirectIfAuth],
-    }),
-    "/dashboard": wrap({
-      component: Dashboard,
-      conditions: [requireAuth],
-    }),
-    "/users": wrap({
-      component: Users,
-      conditions: [requireAuth],
-    }),
-    "/topics": wrap({
-      component: Topics,
-      conditions: [requireAuth],
-    }),
-    "/generate-questions": wrap({
-      component: GenerateQuestions,
-      conditions: [requireAuth],
-    }),
-    "*": Landing,
-  };
 </script>
 
-<div class="min-h-screen bg-gray-100 text-gray-800 antialiased">
-  <Router {routes} />
+<svelte:window on:popstate={() => (currentPath = window.location.pathname)} />
+
+<div class="min-h-screen bg-gray-100 text-gray-800 antialiased" use:links>
+  <Router {url}>
+    <Route path="/login" component={Login} />
+    <Route path="/dashboard" component={Dashboard} />
+    <Route path="/users" component={Users} />
+    <Route path="/topics" component={Topics} />
+    <Route path="/generate-questions" component={GenerateQuestions} />
+    <Route path="/" component={Landing} />
+    <!-- Catch all -->
+    <Route path="*">
+      <Landing />
+    </Route>
+  </Router>
 </div>

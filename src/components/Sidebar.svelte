@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentUser, logout } from "../stores/auth";
-  import { location, link, replace } from "svelte-spa-router";
+  import { location, link, replace } from "../stores/routerCompat";
 
   let showMobileMenu = false;
 
