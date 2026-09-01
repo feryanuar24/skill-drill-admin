@@ -58,7 +58,9 @@
     role="presentation"
   >
     <!-- Modal Header -->
-    <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+    <div
+      class="flex items-center justify-between px-6 py-5 border-b border-gray-100"
+    >
       <h2 class="text-xl font-bold text-gray-900">
         {topic ? "Edit Topic" : "Add New Topic"}
       </h2>
@@ -74,7 +76,10 @@
     <!-- Modal Form -->
     <form on:submit|preventDefault={handleSubmit} class="p-6 space-y-5">
       <div>
-        <label for="name" class="block text-sm font-semibold text-gray-700 mb-1.5">
+        <label
+          for="name"
+          class="block text-sm font-semibold text-gray-700 mb-1.5"
+        >
           Topic Name <span class="text-red-500">*</span>
         </label>
         <input
@@ -84,7 +89,7 @@
           placeholder="e.g. Data Structures & Algorithms"
           class="w-full px-3.5 py-2.5 bg-gray-50 border rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none transition-all {errors.name
             ? 'border-red-400 focus:ring-2 focus:ring-red-200'
-            : 'border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'}"
+            : 'border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'}"
         />
         {#if errors.name}
           <p class="mt-1 text-xs text-red-600">{errors.name}</p>
@@ -92,7 +97,10 @@
       </div>
 
       <div>
-        <label for="description" class="block text-sm font-semibold text-gray-700 mb-1.5">
+        <label
+          for="description"
+          class="block text-sm font-semibold text-gray-700 mb-1.5"
+        >
           Description <span class="text-red-500">*</span>
         </label>
         <textarea
@@ -102,7 +110,7 @@
           rows="4"
           class="w-full px-3.5 py-2.5 bg-gray-50 border rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none transition-all {errors.description
             ? 'border-red-400 focus:ring-2 focus:ring-red-200'
-            : 'border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'}"
+            : 'border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'}"
         />
         {#if errors.description}
           <p class="mt-1 text-xs text-red-600">{errors.description}</p>
@@ -110,7 +118,9 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100">
+      <div
+        class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100"
+      >
         <button
           type="button"
           class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer"
@@ -120,7 +130,7 @@
         </button>
         <button
           type="submit"
-          class="px-5 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-hover rounded-lg shadow-sm transition-colors cursor-pointer"
+          class="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-600-hover rounded-lg shadow-sm transition-colors cursor-pointer"
         >
           Save Topic
         </button>

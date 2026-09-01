@@ -86,13 +86,13 @@ admin/
 │   │   ├── Login.svelte       # Login page
 │   │   ├── Users.svelte       # Users management page
 │   │   ├── Topics.svelte      # Topics management page
-│   │   └── GenerateQuestions.svelte  # Question generation page
+│   │   ├── GenerateQuestions.svelte  # Question generation page
+|   |   └── Landing.svelte     # Landing page
 │   ├── stores/
 │   │   ├── auth.ts            # Authentication store
 │   │   └── router.ts          # Router store
 │   ├── utils/
-│   │   ├── helpers.ts         # Utility functions
-│   │   └── router.ts          # Router utilities
+│   │   └── helpers.ts         # Utility functions
 │   ├── App.svelte             # Root component
 │   ├── app.css                # Global styles
 │   └── main.ts                # Entry point
@@ -173,23 +173,6 @@ The app uses JWT tokens stored in localStorage for authentication:
 - Tokens are automatically sent with every API request
 - If a token expires (401 response), the user is redirected to login
 - User information is stored in localStorage for session persistence
-
-## Styling
-
-The dashboard uses CSS custom properties (variables) for theming:
-
-```css
---primary: #3366cc; /* Primary blue color */
---secondary: #8899dd; /* Secondary blue color */
---danger: #dd3333; /* Red for delete actions */
---success: #33aa33; /* Green for success messages */
---warning: #ffaa00; /* Orange for warnings */
---text: #333333; /* Text color */
---bg: #f5f5f5; /* Background color */
---border: #dddddd; /* Border color */
---radius: 8px; /* Border radius */
---shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
-```
 
 ## Troubleshooting
 

@@ -91,12 +91,14 @@
 </script>
 
 <Layout title="Users Management">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+  <div
+    class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
+  >
     <p class="text-sm text-gray-500">
       Manage registered students and administrator accounts.
     </p>
     <button
-      class="inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+      class="inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-600-hover text-white text-sm font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
       on:click={handleAddNew}
     >
       <span>➕</span>
@@ -105,7 +107,9 @@
   </div>
 
   {#if error}
-    <div class="mb-6 p-4 bg-danger-light border border-red-200 text-danger text-sm rounded-xl flex items-center space-x-2">
+    <div
+      class="mb-6 p-4 bg-red-600-light border border-red-200 text-red-600 text-sm rounded-xl flex items-center space-x-2"
+    >
       <span>⚠️</span>
       <span>{error}</span>
     </div>

@@ -18,12 +18,14 @@
 </script>
 
 <aside
-  class="fixed top-0 left-0 z-40 w-64 h-screen bg-primary text-white flex flex-col shadow-lg transition-transform duration-200 ease-in-out md:translate-x-0 {!showMobileMenu
+  class="fixed top-0 left-0 z-40 w-64 h-screen bg-blue-600 text-white flex flex-col shadow-lg transition-transform duration-200 ease-in-out md:translate-x-0 {!showMobileMenu
     ? '-translate-x-full md:translate-x-0'
     : 'translate-x-0'}"
 >
   <!-- Brand Logo -->
-  <div class="h-16 flex items-center justify-between px-6 border-b border-white/10">
+  <div
+    class="h-16 flex items-center justify-between px-6 border-b border-white/10"
+  >
     <div class="flex items-center space-x-3">
       <span class="text-2xl">🎯</span>
       <h1 class="text-xl font-bold tracking-wide">Skill Drill</h1>
@@ -59,8 +61,12 @@
   <div class="p-4 border-t border-white/10 bg-black/10">
     <div class="flex items-center justify-between mb-3 px-2">
       <div class="flex flex-col min-w-0">
-        <span class="text-xs text-white/60 font-medium uppercase tracking-wider">Signed in as</span>
-        <span class="text-sm font-semibold truncate">{$currentUser?.username || "Admin"}</span>
+        <span class="text-xs text-white/60 font-medium uppercase tracking-wider"
+          >Signed in as</span
+        >
+        <span class="text-sm font-semibold truncate"
+          >{$currentUser?.username || "Admin"}</span
+        >
       </div>
     </div>
     <button
@@ -84,7 +90,7 @@
 
 <!-- Mobile Topbar Header -->
 <div
-  class="md:hidden fixed top-0 left-0 right-0 z-20 h-16 bg-primary text-white flex items-center justify-between px-4 shadow-md"
+  class="md:hidden fixed top-0 left-0 right-0 z-20 h-16 bg-blue-600 text-white flex items-center justify-between px-4 shadow-md"
 >
   <button
     on:click={() => (showMobileMenu = true)}
