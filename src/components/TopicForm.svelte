@@ -13,10 +13,21 @@
 
   let errors: Record<string, string> = {};
 
+  let currentTopicId: number | null = null;
+
   $: if (topic) {
+    if (topic.id !== currentTopicId) {
+      currentTopicId = topic.id;
+      formData = {
+        name: topic.name || "",
+        description: topic.description || "",
+      };
+    }
+  } else if (currentTopicId !== null) {
+    currentTopicId = null;
     formData = {
-      name: topic.name,
-      description: topic.description,
+      name: "",
+      description: "",
     };
   }
 

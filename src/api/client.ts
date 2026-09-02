@@ -61,7 +61,25 @@ export interface CreateTopicRequest {
 export interface GenerateQuestionsRequest {
   topic_id: number;
   num_questions: number;
+  prompt_theme: string;
   difficulty?: string;
+}
+
+export interface Question {
+  id: number;
+  topic_id: number;
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_answer: string;
+  explanation: string;
+  created_at: string;
+}
+
+export interface GenerateQuestionsResponse {
+  questions: Question[];
 }
 
 class ApiClient {
@@ -202,11 +220,13 @@ class ApiClient {
   async generateQuestions(
     topicId: number,
     numQuestions: number,
+    promptTheme: string,
     file?: File,
-  ): Promise<any> {
+  ): Promise<GenerateQuestionsResponse> {
     const formData = new FormData();
     formData.append("topic_id", topicId.toString());
     formData.append("num_questions", numQuestions.toString());
+    formData.append("prompt_theme", promptTheme);
     if (file) {
       formData.append("file_pdf", file);
     }

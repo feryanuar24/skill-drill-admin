@@ -15,12 +15,25 @@
 
   let errors: Record<string, string> = {};
 
+  let currentUserId: number | null = null;
+
   $: if (user) {
+    if (user.id !== currentUserId) {
+      currentUserId = user.id;
+      formData = {
+        username: user.username || "",
+        email: user.email || "",
+        password: "",
+        role: user.role ? user.role.toLowerCase() : "student",
+      };
+    }
+  } else if (currentUserId !== null) {
+    currentUserId = null;
     formData = {
-      username: user.username,
-      email: user.email,
+      username: "",
+      email: "",
       password: "",
-      role: user.role,
+      role: "student",
     };
   }
 
@@ -50,7 +63,7 @@
     }
 
     const submitData = { ...formData };
-    if (!user && !submitData.password) {
+    if (user && !submitData.password) {
       delete (submitData as any).password;
     }
 
