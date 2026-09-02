@@ -97,23 +97,23 @@
       <h1
         class="text-4xl sm:text-5xl xl:text-6xl font-black text-black uppercase tracking-tight leading-[1.08] mb-6"
       >
-        Kelola & Tingkatkan <br />
+        AI-based <br />
         <span
           class="inline-block bg-[#a78bfa] text-white px-3 py-0.5 border-4 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] transform rotate-1 mt-1"
         >
-          Skill Pembelajaran
+          E-learning
         </span>
         <br class="hidden sm:inline" />
-        Dengan Cerdas
+        Management Portal
       </h1>
 
       <!-- Deskripsi -->
       <p
         class="text-base sm:text-lg font-medium text-black/90 leading-relaxed mb-8 max-w-xl bg-white border-3 border-black p-5 rounded-xl shadow-[5px_5px_0px_rgba(0,0,0,1)]"
       >
-        Pusat kendali admin Skill Drill untuk mengelola data pengguna, mengatur
-        topik dan modul kuis, serta men-generate soal latihan otomatis bertenaga
-        kecerdasan buatan (AI).
+        The Skill Drill admin control center for managing user data, organizing
+        topics, and automatically generating practice questions via AI
+        integration.
       </p>
 
       <!-- Fitur Poin Singkat -->
@@ -121,20 +121,65 @@
         <div
           class="flex items-center gap-1.5 bg-[#86efac] border-2 border-black px-3 py-1 rounded-md text-xs font-black uppercase shadow-[2px_2px_0px_rgba(0,0,0,1)]"
         >
-          <span>⚡</span>
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+              />
+            </svg>
+          </span>
           <span>AI Generator</span>
         </div>
         <div
           class="flex items-center gap-1.5 bg-[#67e8f9] border-2 border-black px-3 py-1 rounded-md text-xs font-black uppercase shadow-[2px_2px_0px_rgba(0,0,0,1)]"
         >
-          <span>🎯</span>
-          <span>Manajemen Topik</span>
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+              />
+            </svg>
+          </span>
+          <span>Topic Management</span>
         </div>
         <div
           class="flex items-center gap-1.5 bg-[#fb923c] border-2 border-black px-3 py-1 rounded-md text-xs font-black uppercase shadow-[2px_2px_0px_rgba(0,0,0,1)] text-white"
         >
-          <span>🛡️</span>
-          <span>Akses Terproteksi</span>
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3z"
+              />
+            </svg>
+          </span>
+          <span>Protected Access</span>
         </div>
       </div>
 
@@ -148,7 +193,7 @@
             use:link
             class="group inline-flex items-center justify-center px-8 py-4 bg-[#fde047] hover:bg-[#facc15] border-4 border-black text-black font-black text-base uppercase tracking-wider rounded-xl shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_rgba(0,0,0,1)] active:translate-x-1.5 active:translate-y-1.5 transition-all cursor-pointer"
           >
-            <span>Buka Dashboard</span>
+            <span>Open Dashboard</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -170,7 +215,7 @@
             use:link
             class="group inline-flex items-center justify-center px-8 py-4 bg-[#fde047] hover:bg-[#facc15] border-4 border-black text-black font-black text-base uppercase tracking-wider rounded-xl shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_rgba(0,0,0,1)] active:translate-x-1.5 active:translate-y-1.5 transition-all cursor-pointer"
           >
-            <span>Masuk ke Admin Portal</span>
+            <span>Log In to Admin Portal</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -200,7 +245,20 @@
         <div
           class="absolute -top-6 -right-6 w-20 h-20 bg-[#fb923c] border-4 border-black rounded-full shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center justify-center text-white font-black text-2xl rotate-12 z-20"
         >
-          ✦
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.06l-8.689-8.69a.75.75 0 0 0-1.06 0l-8.69 8.69a.75.75 0 1 0 1.06 1.06l8.69-8.69Z"
+            />
+          </svg>
         </div>
 
         <div
@@ -269,7 +327,7 @@
               <span
                 class="bg-black text-white px-3 py-1 rounded border-2 border-black font-black text-xs uppercase tracking-widest mt-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]"
               >
-                Engineered for Learning
+                E-learning Management
               </span>
             </div>
           </div>
@@ -283,7 +341,20 @@
               <div
                 class="w-5 h-5 bg-[#ea580c] border-2 border-black rounded-full mb-1 flex items-center justify-center text-[10px] text-white font-bold"
               >
-                ▲
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                  />
+                </svg>
               </div>
               <span class="font-black text-xs text-black uppercase">Topics</span
               >
@@ -296,7 +367,20 @@
               <div
                 class="w-5 h-5 bg-[#9333ea] border-2 border-black rounded-md rotate-45 mb-1 flex items-center justify-center text-[10px] text-white font-bold"
               >
-                <span class="-rotate-45">■</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                  />
+                </svg>
               </div>
               <span class="font-black text-xs text-black uppercase">Users</span>
             </div>
@@ -308,7 +392,20 @@
               <div
                 class="w-5 h-5 bg-[#16a34a] border-2 border-black rounded-sm mb-1 flex items-center justify-center text-[10px] text-white font-bold"
               >
-                ●
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+                  />
+                </svg>
               </div>
               <span class="font-black text-xs text-black uppercase">AI Q&A</span
               >
@@ -332,9 +429,9 @@
       © {new Date().getFullYear()} Skill Drill Platform. All rights reserved.
     </p>
     <div class="flex items-center space-x-4">
-      <span class="hover:text-black cursor-pointer">Admin Access Only</span>
+      <span class="hover:text-black">Admin Access Only</span>
       <span>•</span>
-      <span class="hover:text-black cursor-pointer">AI Integrated</span>
+      <span class="hover:text-black">AI Integrated</span>
     </div>
   </footer>
 </div>
