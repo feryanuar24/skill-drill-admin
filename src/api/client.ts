@@ -68,6 +68,7 @@ export interface GenerateQuestionsRequest {
 export interface Question {
   id: number;
   topic_id: number;
+  topic?: Topic;
   question_text: string;
   option_a: string;
   option_b: string;
@@ -76,6 +77,28 @@ export interface Question {
   correct_answer: string;
   explanation: string;
   created_at: string;
+}
+
+export interface CreateQuestionRequest {
+  topic_id: number;
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_answer: string;
+  explanation?: string;
+}
+
+export interface UpdateQuestionRequest {
+  topic_id?: number;
+  question_text?: string;
+  option_a?: string;
+  option_b?: string;
+  option_c?: string;
+  option_d?: string;
+  correct_answer?: string;
+  explanation?: string;
 }
 
 export interface GenerateQuestionsResponse {
@@ -217,6 +240,51 @@ class ApiClient {
   }
 
   // Question endpoints
+  async getQuestions(topicId?: number, search?: string): Promise<Question[]> {
+    const params: Record<string, string> = {};
+    if (topicId) {
+      params.topic_id = topicId.toString();
+    }
+    if (search && search.trim()) {
+      params.search = search.trim();
+    }
+    const response = await this.client.get<ApiResponse<Question[]>>(
+      "/questions",
+      { params },
+    );
+    return response.data.data;
+  }
+
+  async getQuestionById(id: number): Promise<Question> {
+    const response = await this.client.get<ApiResponse<Question>>(
+      `/questions/${id}`,
+    );
+    return response.data.data;
+  }
+
+  async createQuestion(data: CreateQuestionRequest): Promise<Question> {
+    const response = await this.client.post<ApiResponse<Question>>(
+      "/questions",
+      data,
+    );
+    return response.data.data;
+  }
+
+  async updateQuestion(
+    id: number,
+    data: UpdateQuestionRequest,
+  ): Promise<Question> {
+    const response = await this.client.put<ApiResponse<Question>>(
+      `/questions/${id}`,
+      data,
+    );
+    return response.data.data;
+  }
+
+  async deleteQuestion(id: number): Promise<void> {
+    await this.client.delete(`/questions/${id}`);
+  }
+
   async generateQuestions(
     topicId: number,
     numQuestions: number,

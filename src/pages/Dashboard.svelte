@@ -7,19 +7,25 @@
 
   let userCount = 0;
   let topicCount = 0;
+  let questionCount = 0;
   let loading = true;
 
   onMount(async () => {
     try {
-      const [usersResult, topicsResult] = await Promise.allSettled([
-        apiClient.getUsers(),
-        apiClient.getTopics(),
-      ]);
+      const [usersResult, topicsResult, questionsResult] =
+        await Promise.allSettled([
+          apiClient.getUsers(),
+          apiClient.getTopics(),
+          apiClient.getQuestions(),
+        ]);
       if (usersResult.status === "fulfilled") {
         userCount = usersResult.value.length;
       }
       if (topicsResult.status === "fulfilled") {
         topicCount = topicsResult.value.length;
+      }
+      if (questionsResult.status === "fulfilled") {
+        questionCount = questionsResult.value.length;
       }
     } catch (e) {
       console.error(e);
@@ -88,7 +94,7 @@
   </div>
 
   <!-- Metric Cards Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <!-- Users Card -->
     <div
       class="bg-white p-6 rounded-2xl border-4 border-black shadow-[5px_5px_0px_rgba(0,0,0,1)] flex items-center justify-between hover:shadow-[7px_7px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all"
@@ -97,7 +103,7 @@
         <span
           class="inline-block bg-[#bae6fd] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black"
         >
-          Total Registered
+          Total Users
         </span>
         <p class="text-3xl sm:text-4xl font-black text-black mt-2">
           {loading ? "..." : userCount}
@@ -107,7 +113,7 @@
           use:link
           class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black bg-[#bae6fd] hover:bg-[#7dd3fc] px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] mt-3 transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
         >
-          <span>Manage Users</span>
+          <span>Manage</span>
           <span>&rarr;</span>
         </a>
       </div>
@@ -139,7 +145,7 @@
         <span
           class="inline-block bg-[#fed7aa] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black"
         >
-          Active Subjects
+          Subjects
         </span>
         <p class="text-3xl sm:text-4xl font-black text-black mt-2">
           {loading ? "..." : topicCount}
@@ -149,7 +155,7 @@
           use:link
           class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black bg-[#fed7aa] hover:bg-[#fdba74] px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] mt-3 transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
         >
-          <span>Manage Topics</span>
+          <span>Manage</span>
           <span>&rarr;</span>
         </a>
       </div>
@@ -168,6 +174,48 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Questions Card -->
+    <div
+      class="bg-white p-6 rounded-2xl border-4 border-black shadow-[5px_5px_0px_rgba(0,0,0,1)] flex items-center justify-between hover:shadow-[7px_7px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all"
+    >
+      <div>
+        <span
+          class="inline-block bg-[#fde047] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black"
+        >
+          Total Questions
+        </span>
+        <p class="text-3xl sm:text-4xl font-black text-black mt-2">
+          {loading ? "..." : questionCount}
+        </p>
+        <a
+          href="/questions"
+          use:link
+          class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black bg-[#fde047] hover:bg-[#facc15] px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] mt-3 transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
+        >
+          <span>Manage</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+      <div
+        class="w-14 h-14 bg-[#fde047] text-black border-3 border-black rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl shrink-0"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.8"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
           />
         </svg>
       </div>
@@ -231,7 +279,7 @@
       </span>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <a
         href="/users"
         use:link
@@ -297,6 +345,38 @@
       </a>
 
       <a
+        href="/questions"
+        use:link
+        class="p-4 rounded-xl border-3 border-black bg-[#fdf5cb] hover:bg-[#fde047] shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-start space-x-3.5 group cursor-pointer"
+      >
+        <span
+          class="text-2xl p-2 bg-white border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
+            />
+          </svg>
+        </span>
+        <div>
+          <h4 class="font-black text-black text-sm uppercase tracking-tight">
+            Question Bank
+          </h4>
+          <p class="text-xs font-semibold text-black/70 mt-1">
+            Browse, create, edit, and organize quiz questions.
+          </p>
+        </div>
+      </a>
+
+      <a
         href="/generate-questions"
         use:link
         class="p-4 rounded-xl border-3 border-black bg-[#fdf5cb] hover:bg-[#bbf7d0] shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-start space-x-3.5 group cursor-pointer"
@@ -320,10 +400,10 @@
         </span>
         <div>
           <h4 class="font-black text-black text-sm uppercase tracking-tight">
-            AI Question Generator
+            AI Generator
           </h4>
           <p class="text-xs font-semibold text-black/70 mt-1">
-            Generate questions automatically from topics or PDF documents.
+            Generate questions automatically with AI.
           </p>
         </div>
       </a>

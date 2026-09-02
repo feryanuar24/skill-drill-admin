@@ -5,6 +5,7 @@
   import Dashboard from "./pages/Dashboard.svelte";
   import Users from "./pages/Users.svelte";
   import Topics from "./pages/Topics.svelte";
+  import Questions from "./pages/Questions.svelte";
   import GenerateQuestions from "./pages/GenerateQuestions.svelte";
   import Login from "./pages/Login.svelte";
   import Landing from "./pages/Landing.svelte";
@@ -23,9 +24,13 @@
     if (currentPath === "/login" && token) {
       navigate("/dashboard", { replace: true });
     } else if (
-      ["/dashboard", "/users", "/topics", "/generate-questions"].includes(
-        currentPath,
-      ) &&
+      [
+        "/dashboard",
+        "/users",
+        "/topics",
+        "/questions",
+        "/generate-questions",
+      ].includes(currentPath) &&
       !token
     ) {
       navigate("/login", { replace: true });
@@ -44,6 +49,7 @@
     <Route path="/dashboard" component={Dashboard} />
     <Route path="/users" component={Users} />
     <Route path="/topics" component={Topics} />
+    <Route path="/questions" component={Questions} />
     <Route path="/generate-questions" component={GenerateQuestions} />
     <Route path="/" component={Landing} />
     <!-- Catch all -->
