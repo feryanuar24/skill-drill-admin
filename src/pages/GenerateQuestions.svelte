@@ -78,15 +78,22 @@
   }
 </script>
 
-<Layout title="Generate Questions">
+<Layout title="AI Question Generator">
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
     <!-- Generator Form Card -->
     <div
-      class="lg:col-span-5 bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8 h-fit"
+      class="lg:col-span-5 bg-white rounded-2xl border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] p-6 sm:p-8 h-fit relative overflow-hidden"
     >
       <div class="mb-6">
-        <h2 class="text-xl font-bold text-gray-900">AI Question Generator</h2>
-        <p class="text-sm text-gray-500 mt-1">
+        <div
+          class="inline-block bg-[#fde047] border-2 border-black px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black mb-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+        >
+          AI Tool
+        </div>
+        <h2 class="text-xl font-black uppercase tracking-tight text-black">
+          Generate Questions
+        </h2>
+        <p class="text-xs sm:text-sm font-bold text-black/70 mt-1">
           Generate quiz questions automatically from a selected topic or an
           uploaded PDF document.
         </p>
@@ -94,35 +101,35 @@
 
       {#if error}
         <div
-          class="mb-5 p-4 bg-red-600-light border border-red-200 text-red-600 text-sm rounded-xl flex items-center space-x-2"
+          class="mb-5 p-3.5 bg-[#ffe4e6] border-3 border-black text-black text-xs sm:text-sm font-bold rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center space-x-2.5"
         >
-          <span>⚠️</span>
+          <span class="text-lg">⚠️</span>
           <span>{error}</span>
         </div>
       {/if}
 
       {#if success}
         <div
-          class="mb-5 p-4 bg-green-600-light border border-green-200 text-green-600 text-sm rounded-xl flex items-center space-x-2"
+          class="mb-5 p-3.5 bg-[#bbf7d0] border-3 border-black text-black text-xs sm:text-sm font-bold rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center space-x-2.5"
         >
-          <span>✅</span>
+          <span class="text-lg">✅</span>
           <span>{success}</span>
         </div>
       {/if}
 
-      <form on:submit|preventDefault={handleGenerate} class="space-y-5">
+      <form on:submit|preventDefault={handleGenerate} class="space-y-4">
         <div>
           <label
             for="topic"
-            class="block text-sm font-semibold text-gray-700 mb-1.5"
+            class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
           >
-            Select Topic <span class="text-red-500">*</span>
+            Select Topic <span class="text-rose-500">*</span>
           </label>
           <select
             id="topic"
             bind:value={selectedTopicId}
             required
-            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all"
+            class="w-full px-3.5 py-2.5 bg-[#fef9c3]/30 focus:bg-white border-2 border-black rounded-xl text-sm font-bold text-black focus:outline-none focus:shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
           >
             <option value={null}>-- Choose a topic --</option>
             {#each topics as topic}
@@ -134,9 +141,9 @@
         <div>
           <label
             for="num-questions"
-            class="block text-sm font-semibold text-gray-700 mb-1.5"
+            class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
           >
-            Number of Questions <span class="text-red-500">*</span>
+            Number of Questions <span class="text-rose-500">*</span>
           </label>
           <input
             id="num-questions"
@@ -145,9 +152,9 @@
             min="1"
             max="50"
             required
-            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all"
+            class="w-full px-3.5 py-2.5 bg-[#fef9c3]/30 focus:bg-white border-2 border-black rounded-xl text-sm font-bold text-black focus:outline-none focus:shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-all"
           />
-          <span class="text-xs text-gray-400 mt-1 block"
+          <span class="text-[11px] font-bold text-black/50 mt-1 block"
             >Between 1 and 50 questions</span
           >
         </div>
@@ -155,9 +162,9 @@
         <div>
           <label
             for="file"
-            class="block text-sm font-semibold text-gray-700 mb-1.5"
+            class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
           >
-            Upload PDF File <span class="text-xs font-normal text-gray-400"
+            Upload PDF File <span class="text-[10px] font-normal text-black/50"
               >(Optional)</span
             >
           </label>
@@ -168,10 +175,10 @@
               accept=".pdf"
               on:change={handleFileChange}
               disabled={loading}
-              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600-light file:text-blue-600 hover:file:bg-blue-600 hover:file:text-white file:cursor-pointer file:transition-all border border-gray-300 rounded-lg bg-gray-50 p-1"
+              class="block w-full text-xs font-bold text-black file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:tracking-wider file:bg-[#fde047] hover:file:bg-[#facc15] file:text-black file:cursor-pointer file:shadow-[2px_2px_0px_rgba(0,0,0,1)] border-2 border-black rounded-xl bg-[#fef9c3]/20 p-2 cursor-pointer"
             />
           </div>
-          <span class="text-xs text-gray-400 mt-1 block"
+          <span class="text-[11px] font-bold text-black/50 mt-1 block"
             >Maximum file size: 10MB (PDF only)</span
           >
         </div>
@@ -179,11 +186,11 @@
         <button
           type="submit"
           disabled={loading}
-          class="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-600-hover disabled:opacity-60 text-white font-semibold rounded-xl shadow-md shadow-blue-600/30 transition-all duration-150 flex items-center justify-center space-x-2 cursor-pointer disabled:cursor-not-allowed"
+          class="w-full mt-2 py-3.5 px-4 bg-[#fde047] hover:bg-[#facc15] disabled:opacity-60 border-3 border-black text-black font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all flex items-center justify-center space-x-2 cursor-pointer disabled:cursor-not-allowed"
         >
           {#if loading}
             <svg
-              class="animate-spin h-5 w-5 text-white"
+              class="animate-spin h-5 w-5 text-black"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -214,35 +221,35 @@
     <div class="lg:col-span-7">
       {#if generatedQuestions.length > 0}
         <div
-          class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8"
+          class="bg-white rounded-2xl border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] p-6 sm:p-8"
         >
           <div
-            class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100"
+            class="flex items-center justify-between mb-6 pb-4 border-b-3 border-black"
           >
-            <h2 class="text-xl font-bold text-gray-900">
+            <h2
+              class="text-lg sm:text-xl font-black uppercase tracking-tight text-black"
+            >
               Generated Results ({generatedQuestions.length})
             </h2>
             <span
-              class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-800 rounded-full"
+              class="text-xs font-black uppercase tracking-wider px-3 py-1 bg-[#86efac] text-black border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             >
-              Success
+              Ready
             </span>
           </div>
 
           <div class="space-y-4">
             {#each generatedQuestions as question, idx}
               <div
-                class="p-5 bg-gray-50 border-l-4 border-blue-600 rounded-r-xl space-y-3"
+                class="p-5 bg-[#fef9c3]/30 border-3 border-black rounded-2xl shadow-[3px_3px_0px_rgba(0,0,0,1)] space-y-3"
               >
                 <div class="flex items-start space-x-3">
                   <span
-                    class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-bold shrink-0 mt-0.5"
+                    class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#fde047] border-2 border-black text-black text-xs font-black shadow-[2px_2px_0px_rgba(0,0,0,1)] shrink-0 mt-0.5"
                   >
                     {idx + 1}
                   </span>
-                  <p
-                    class="text-sm font-semibold text-gray-900 leading-relaxed"
-                  >
+                  <p class="text-sm font-bold text-black leading-relaxed">
                     {question.text}
                   </p>
                 </div>
@@ -251,10 +258,12 @@
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-10">
                     {#each question.options as option, optIdx}
                       <div
-                        class="flex items-start space-x-2 p-2.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-700"
+                        class="flex items-start space-x-2 p-2.5 bg-white border-2 border-black rounded-xl shadow-[2px_2px_0px_rgba(0,0,0,1)] text-xs font-bold text-black"
                       >
-                        <span class="font-bold text-blue-600">
-                          {String.fromCharCode(65 + optIdx)}.
+                        <span
+                          class="font-black text-black bg-[#fde047] px-1.5 py-0.5 rounded border border-black text-[10px]"
+                        >
+                          {String.fromCharCode(65 + optIdx)}
                         </span>
                         <span>{option}</span>
                       </div>
@@ -265,9 +274,12 @@
                 {#if question.answer}
                   <div class="pl-10">
                     <div
-                      class="p-3 bg-green-600-light border border-green-200 rounded-lg text-xs text-green-900 flex items-center space-x-2"
+                      class="p-3 bg-[#bbf7d0] border-2 border-black rounded-xl shadow-[2px_2px_0px_rgba(0,0,0,1)] text-xs font-bold text-black flex items-center space-x-2"
                     >
-                      <span class="font-bold">Correct Answer:</span>
+                      <span
+                        class="font-black uppercase tracking-wider bg-black text-white px-1.5 py-0.5 rounded text-[10px]"
+                        >Correct Answer:</span
+                      >
                       <span>{question.answer}</span>
                     </div>
                   </div>
@@ -278,13 +290,19 @@
         </div>
       {:else}
         <div
-          class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center flex flex-col items-center justify-center h-full min-h-[300px]"
+          class="bg-white rounded-2xl border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] p-8 sm:p-12 text-center flex flex-col items-center justify-center h-full min-h-85"
         >
-          <span class="text-5xl mb-4">💡</span>
-          <h3 class="text-lg font-bold text-gray-800 mb-1">
+          <div
+            class="w-16 h-16 bg-[#fde047] border-3 border-black rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center justify-center text-3xl mb-4 transform -rotate-3"
+          >
+            ✨
+          </div>
+          <h3
+            class="text-base sm:text-lg font-black uppercase tracking-tight text-black mb-1"
+          >
             No Questions Generated Yet
           </h3>
-          <p class="text-sm text-gray-500 max-w-sm">
+          <p class="text-xs sm:text-sm font-bold text-black/60 max-w-sm">
             Select a topic on the left and click "Generate Questions" to create
             AI-powered quizzes.
           </p>

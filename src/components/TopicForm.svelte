@@ -48,89 +48,98 @@
 </script>
 
 <div
-  class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+  class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 selection:bg-black selection:text-[#fde047]"
   on:click={handleClose}
   role="presentation"
 >
   <div
-    class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all"
+    class="bg-white rounded-2xl shadow-[8px_8px_0px_rgba(0,0,0,1)] border-4 border-black w-full max-w-md overflow-hidden relative"
     on:click|stopPropagation
     role="presentation"
   >
     <!-- Modal Header -->
     <div
-      class="flex items-center justify-between px-6 py-5 border-b border-gray-100"
+      class="flex items-center justify-between px-6 py-4 bg-[#fdf5cb] border-b-3 border-black"
     >
-      <h2 class="text-xl font-bold text-gray-900">
-        {topic ? "Edit Topic" : "Add New Topic"}
-      </h2>
+      <div class="flex items-center space-x-2.5">
+        <span
+          class="w-8 h-8 bg-[#fde047] border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)] flex items-center justify-center text-sm font-black"
+        >
+          📚
+        </span>
+        <h2 class="text-lg font-black uppercase tracking-tight text-black">
+          {topic ? "Edit Topic" : "Add New Topic"}
+        </h2>
+      </div>
       <button
-        class="text-gray-400 hover:text-gray-600 rounded-lg p-1 text-2xl leading-none transition-colors cursor-pointer"
+        class="w-8 h-8 flex items-center justify-center bg-white hover:bg-gray-100 border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)] text-black font-black text-sm leading-none transition-all cursor-pointer hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
         on:click={handleClose}
         aria-label="Close"
       >
-        &times;
+        ✕
       </button>
     </div>
 
     <!-- Modal Form -->
-    <form on:submit|preventDefault={handleSubmit} class="p-6 space-y-5">
+    <form on:submit|preventDefault={handleSubmit} class="p-6 space-y-4">
       <div>
         <label
           for="name"
-          class="block text-sm font-semibold text-gray-700 mb-1.5"
+          class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
         >
-          Topic Name <span class="text-red-500">*</span>
+          Topic Name <span class="text-rose-500">*</span>
         </label>
         <input
           id="name"
           type="text"
           bind:value={formData.name}
           placeholder="e.g. Data Structures & Algorithms"
-          class="w-full px-3.5 py-2.5 bg-gray-50 border rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none transition-all {errors.name
-            ? 'border-red-400 focus:ring-2 focus:ring-red-200'
-            : 'border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'}"
+          class="w-full px-3.5 py-2.5 bg-[#fef9c3]/30 focus:bg-white border-2 border-black rounded-xl text-sm font-bold text-black placeholder:text-black/40 focus:outline-none focus:shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-all {errors.name
+            ? 'border-rose-500 bg-rose-50'
+            : ''}"
         />
         {#if errors.name}
-          <p class="mt-1 text-xs text-red-600">{errors.name}</p>
+          <p class="mt-1 text-xs font-bold text-rose-600">{errors.name}</p>
         {/if}
       </div>
 
       <div>
         <label
           for="description"
-          class="block text-sm font-semibold text-gray-700 mb-1.5"
+          class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
         >
-          Description <span class="text-red-500">*</span>
+          Description <span class="text-rose-500">*</span>
         </label>
         <textarea
           id="description"
           bind:value={formData.description}
           placeholder="Enter a brief overview of this learning topic..."
           rows="4"
-          class="w-full px-3.5 py-2.5 bg-gray-50 border rounded-lg text-sm text-gray-900 focus:bg-white focus:outline-none transition-all {errors.description
-            ? 'border-red-400 focus:ring-2 focus:ring-red-200'
-            : 'border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'}"
+          class="w-full px-3.5 py-2.5 bg-[#fef9c3]/30 focus:bg-white border-2 border-black rounded-xl text-sm font-bold text-black placeholder:text-black/40 focus:outline-none focus:shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-all {errors.description
+            ? 'border-rose-500 bg-rose-50'
+            : ''}"
         />
         {#if errors.description}
-          <p class="mt-1 text-xs text-red-600">{errors.description}</p>
+          <p class="mt-1 text-xs font-bold text-rose-600">
+            {errors.description}
+          </p>
         {/if}
       </div>
 
       <!-- Modal Footer -->
       <div
-        class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100"
+        class="flex items-center justify-end space-x-3 pt-4 border-t-2 border-black/10"
       >
         <button
           type="button"
-          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer"
+          class="px-4 py-2.5 text-xs font-black uppercase tracking-wider text-black bg-white hover:bg-gray-100 rounded-xl border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none cursor-pointer transition-all"
           on:click={handleClose}
         >
           Cancel
         </button>
         <button
           type="submit"
-          class="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-600-hover rounded-lg shadow-sm transition-colors cursor-pointer"
+          class="px-5 py-2.5 text-xs font-black uppercase tracking-wider text-black bg-[#fde047] hover:bg-[#facc15] rounded-xl border-3 border-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none cursor-pointer transition-all"
         >
           Save Topic
         </button>

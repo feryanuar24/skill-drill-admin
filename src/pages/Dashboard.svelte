@@ -29,30 +29,58 @@
   });
 </script>
 
-<Layout title="Dashboard">
+<Layout title="Dashboard Overview">
   <!-- Welcome Banner -->
   <div
-    class="mb-8 p-6 md:p-8 bg-linear-to-r from-blue-600 to-blue-700 rounded-2xl text-white shadow-lg shadow-blue-600/20"
+    class="mb-8 p-6 sm:p-8 bg-[#a78bfa] border-4 border-black rounded-2xl text-black shadow-[6px_6px_0px_rgba(0,0,0,1)] relative overflow-hidden"
   >
+    <!-- Background subtle geometric accent -->
     <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      class="absolute inset-0 pointer-events-none opacity-10"
+      style="background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 0, transparent 16px);"
+    ></div>
+
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between gap-5 relative z-10"
     >
       <div>
-        <h2 class="text-2xl md:text-3xl font-bold">
-          Welcome back, {$currentUser?.username || "Admin"}! 👋
+        <div
+          class="inline-block bg-[#fde047] border-2 border-black px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wider mb-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+        >
+          Overview & Metrics
+        </div>
+        <h2
+          class="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+        >
+          Welcome back, {$currentUser?.username || "Admin"}!
         </h2>
-        <p class="text-white/80 mt-1 text-sm md:text-base">
+        <p class="text-black font-bold mt-1 text-sm sm:text-base max-w-xl">
           Here is an overview of the Skill Drill platform metrics and quick
-          actions.
+          management actions.
         </p>
       </div>
-      <div>
+      <div class="shrink-0">
         <a
           href="/generate-questions"
           use:link
-          class="inline-flex items-center space-x-2 bg-white text-blue-600 hover:bg-gray-100 font-semibold px-5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer text-sm"
+          class="inline-flex items-center space-x-2 bg-[#fde047] hover:bg-[#facc15] text-black font-black uppercase text-xs sm:text-sm px-5 py-3.5 rounded-xl border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all cursor-pointer"
         >
-          <span>✨</span>
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+              />
+            </svg>
+          </span>
           <span>Generate Questions</span>
         </a>
       </div>
@@ -63,99 +91,175 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     <!-- Users Card -->
     <div
-      class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between"
+      class="bg-white p-6 rounded-2xl border-4 border-black shadow-[5px_5px_0px_rgba(0,0,0,1)] flex items-center justify-between hover:shadow-[7px_7px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all"
     >
       <div>
-        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
-          Total Users
-        </p>
-        <p class="text-3xl font-extrabold text-gray-900 mt-2">
+        <span
+          class="inline-block bg-[#bae6fd] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black"
+        >
+          Total Registered
+        </span>
+        <p class="text-3xl sm:text-4xl font-black text-black mt-2">
           {loading ? "..." : userCount}
         </p>
         <a
           href="/users"
           use:link
-          class="inline-flex items-center text-xs font-medium text-blue-600 hover:underline mt-3"
+          class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black bg-[#bae6fd] hover:bg-[#7dd3fc] px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] mt-3 transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
         >
-          Manage Users &rarr;
+          <span>Manage Users</span>
+          <span>&rarr;</span>
         </a>
       </div>
       <div
-        class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl"
+        class="w-14 h-14 bg-[#38bdf8] text-black border-3 border-black rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl shrink-0"
       >
-        👥
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+          />
+        </svg>
       </div>
     </div>
 
     <!-- Topics Card -->
     <div
-      class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between"
+      class="bg-white p-6 rounded-2xl border-4 border-black shadow-[5px_5px_0px_rgba(0,0,0,1)] flex items-center justify-between hover:shadow-[7px_7px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all"
     >
       <div>
-        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
-          Active Topics
-        </p>
-        <p class="text-3xl font-extrabold text-gray-900 mt-2">
+        <span
+          class="inline-block bg-[#fed7aa] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black"
+        >
+          Active Subjects
+        </span>
+        <p class="text-3xl sm:text-4xl font-black text-black mt-2">
           {loading ? "..." : topicCount}
         </p>
         <a
           href="/topics"
           use:link
-          class="inline-flex items-center text-xs font-medium text-blue-600 hover:underline mt-3"
+          class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black bg-[#fed7aa] hover:bg-[#fdba74] px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] mt-3 transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
         >
-          Manage Topics &rarr;
+          <span>Manage Topics</span>
+          <span>&rarr;</span>
         </a>
       </div>
       <div
-        class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl"
+        class="w-14 h-14 bg-[#fb923c] text-white border-3 border-black rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl shrink-0"
       >
-        📚
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+          />
+        </svg>
       </div>
     </div>
 
     <!-- AI Generator Card -->
     <div
-      class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between"
+      class="bg-white p-6 rounded-2xl border-4 border-black shadow-[5px_5px_0px_rgba(0,0,0,1)] flex items-center justify-between hover:shadow-[7px_7px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all"
     >
       <div>
-        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
-          AI Question Engine
-        </p>
-        <p class="text-3xl font-extrabold text-gray-900 mt-2">Ready</p>
+        <span
+          class="inline-block bg-[#bbf7d0] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black"
+        >
+          Question Engine
+        </span>
+        <p class="text-3xl sm:text-4xl font-black text-black mt-2">Ready</p>
         <a
           href="/generate-questions"
           use:link
-          class="inline-flex items-center text-xs font-medium text-blue-600 hover:underline mt-3"
+          class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-black bg-[#bbf7d0] hover:bg-[#86efac] px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] mt-3 transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
         >
-          Create Quizzes &rarr;
+          <span>Create Quizzes</span>
+          <span>&rarr;</span>
         </a>
       </div>
       <div
-        class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl"
+        class="w-14 h-14 bg-[#86efac] text-black border-3 border-black rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl shrink-0"
       >
-        ❓
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+          />
+        </svg>
       </div>
     </div>
   </div>
 
   <!-- Quick Shortcuts -->
-  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-    <h3 class="text-lg font-bold text-gray-900 mb-4">Quick Navigation</h3>
+  <div
+    class="bg-white rounded-2xl border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] p-6 sm:p-8"
+  >
+    <div class="flex items-center justify-between mb-5">
+      <h3
+        class="text-lg sm:text-xl font-black uppercase tracking-tight text-black"
+      >
+        Quick Shortcuts
+      </h3>
+      <span
+        class="text-xs font-bold uppercase bg-[#fde047] border-2 border-black px-2.5 py-0.5 rounded shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+      >
+        Admin Controls
+      </span>
+    </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <a
         href="/users"
         use:link
-        class="p-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-blue-600-light hover:border-blue-600/30 transition-all flex items-start space-x-3 group"
+        class="p-4 rounded-xl border-3 border-black bg-[#fdf5cb] hover:bg-[#bae6fd] shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-start space-x-3.5 group cursor-pointer"
       >
-        <span class="text-2xl">👥</span>
-        <div>
-          <h4
-            class="font-semibold text-gray-800 group-hover:text-blue-600 text-sm"
+        <span
+          class="text-2xl p-2 bg-white border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
           >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+            />
+          </svg>
+        </span>
+        <div>
+          <h4 class="font-black text-black text-sm uppercase tracking-tight">
             User Management
           </h4>
-          <p class="text-xs text-gray-500 mt-0.5">
-            Add, edit, or remove platform users.
+          <p class="text-xs font-semibold text-black/70 mt-1">
+            Add, edit, or remove platform students and admins.
           </p>
         </div>
       </a>
@@ -163,17 +267,31 @@
       <a
         href="/topics"
         use:link
-        class="p-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-blue-600-light hover:border-blue-600/30 transition-all flex items-start space-x-3 group"
+        class="p-4 rounded-xl border-3 border-black bg-[#fdf5cb] hover:bg-[#fed7aa] shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-start space-x-3.5 group cursor-pointer"
       >
-        <span class="text-2xl">📚</span>
-        <div>
-          <h4
-            class="font-semibold text-gray-800 group-hover:text-blue-600 text-sm"
+        <span
+          class="text-2xl p-2 bg-white border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
           >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+            />
+          </svg>
+        </span>
+        <div>
+          <h4 class="font-black text-black text-sm uppercase tracking-tight">
             Topic Management
           </h4>
-          <p class="text-xs text-gray-500 mt-0.5">
-            Organize learning subjects and categories.
+          <p class="text-xs font-semibold text-black/70 mt-1">
+            Organize learning subjects, topics, and categories.
           </p>
         </div>
       </a>
@@ -181,17 +299,31 @@
       <a
         href="/generate-questions"
         use:link
-        class="p-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-blue-600-light hover:border-blue-600/30 transition-all flex items-start space-x-3 group"
+        class="p-4 rounded-xl border-3 border-black bg-[#fdf5cb] hover:bg-[#bbf7d0] shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-start space-x-3.5 group cursor-pointer"
       >
-        <span class="text-2xl">❓</span>
-        <div>
-          <h4
-            class="font-semibold text-gray-800 group-hover:text-blue-600 text-sm"
+        <span
+          class="text-2xl p-2 bg-white border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
           >
-            Question Generator
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+            />
+          </svg>
+        </span>
+        <div>
+          <h4 class="font-black text-black text-sm uppercase tracking-tight">
+            AI Question Generator
           </h4>
-          <p class="text-xs text-gray-500 mt-0.5">
-            Generate quiz questions from topics or PDF documents.
+          <p class="text-xs font-semibold text-black/70 mt-1">
+            Generate questions automatically from topics or PDF documents.
           </p>
         </div>
       </a>

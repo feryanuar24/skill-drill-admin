@@ -79,26 +79,34 @@
     { key: "username", label: "Username" },
     { key: "email", label: "Email" },
     { key: "role", label: "Role", width: "120px" },
-    { key: "is_verified", label: "Verified", width: "100px" },
+    { key: "is_verified", label: "Verified", width: "110px" },
     { key: "created_at", label: "Created At", width: "180px" },
   ];
 
   $: displayRows = users.map((u) => ({
     ...u,
-    is_verified: u.is_verified ? "Yes" : "No",
+    role: u.role.toUpperCase(),
+    is_verified: u.is_verified ? "YES" : "NO",
     created_at: formatDateTime(u.created_at),
   }));
 </script>
 
 <Layout title="Users Management">
   <div
-    class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
+    class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 bg-white border-4 border-black p-4 sm:p-5 rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)]"
   >
-    <p class="text-sm text-gray-500">
-      Manage registered students and administrator accounts.
-    </p>
+    <div>
+      <div
+        class="inline-block bg-[#bae6fd] border-2 border-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider text-black mb-1"
+      >
+        Accounts
+      </div>
+      <p class="text-xs sm:text-sm font-bold text-black/80">
+        Manage registered students and administrator platform accounts.
+      </p>
+    </div>
     <button
-      class="inline-flex items-center justify-center space-x-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-600-hover text-white text-sm font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+      class="inline-flex items-center justify-center space-x-2 px-5 py-3 bg-[#fde047] hover:bg-[#facc15] text-black text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all cursor-pointer shrink-0"
       on:click={handleAddNew}
     >
       <span>➕</span>
@@ -108,9 +116,9 @@
 
   {#if error}
     <div
-      class="mb-6 p-4 bg-red-600-light border border-red-200 text-red-600 text-sm rounded-xl flex items-center space-x-2"
+      class="mb-6 p-3.5 bg-[#ffe4e6] border-3 border-black text-black text-xs sm:text-sm font-bold rounded-xl shadow-[3px_3px_0px_rgba(0,0,0,1)] flex items-center space-x-2.5"
     >
-      <span>⚠️</span>
+      <span class="text-lg">⚠️</span>
       <span>{error}</span>
     </div>
   {/if}

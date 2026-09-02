@@ -35,7 +35,10 @@
 
 <svelte:window on:popstate={() => (currentPath = window.location.pathname)} />
 
-<div class="min-h-screen bg-gray-100 text-gray-800 antialiased" use:links>
+<div
+  class="min-h-screen bg-[#fdf5cb] text-black antialiased selection:bg-black selection:text-[#fde047]"
+  use:links
+>
   <Router {url}>
     <Route path="/login" component={Login} />
     <Route path="/dashboard" component={Dashboard} />
