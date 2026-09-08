@@ -138,12 +138,21 @@
         </div>
 
         <div>
-          <label
-            for="password"
-            class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
-          >
-            Password
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label
+              for="password"
+              class="block text-xs font-black uppercase tracking-wider text-black"
+            >
+              Password
+            </label>
+            <a
+              href="/forgot-password"
+              use:link
+              class="text-xs font-bold text-black/70 hover:text-black hover:underline"
+            >
+              Forgot password?
+            </a>
+          </div>
           <input
             id="password"
             type="password"

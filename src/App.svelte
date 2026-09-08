@@ -10,6 +10,8 @@
   import Login from "./pages/Login.svelte";
   import Register from "./pages/Register.svelte";
   import VerifyEmail from "./pages/VerifyEmail.svelte";
+  import ForgotPassword from "./pages/ForgotPassword.svelte";
+  import ResetPassword from "./pages/ResetPassword.svelte";
   import Landing from "./pages/Landing.svelte";
 
   export let url = "";
@@ -23,7 +25,12 @@
 
   $: {
     const token = localStorage.getItem("token");
-    if (["/login", "/register"].includes(currentPath) && token) {
+    if (
+      ["/login", "/register", "/forgot-password", "/reset-password"].includes(
+        currentPath,
+      ) &&
+      token
+    ) {
       navigate("/dashboard", { replace: true });
     } else if (
       [
@@ -51,6 +58,8 @@
     <Route path="/register" component={Register} />
     <Route path="/verify-email" component={VerifyEmail} />
     <Route path="/verify" component={VerifyEmail} />
+    <Route path="/forgot-password" component={ForgotPassword} />
+    <Route path="/reset-password" component={ResetPassword} />
     <Route path="/dashboard" component={Dashboard} />
     <Route path="/users" component={Users} />
     <Route path="/topics" component={Topics} />

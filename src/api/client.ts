@@ -45,6 +45,15 @@ export interface RegisterResponse {
   };
 }
 
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  password: string;
+}
+
 export interface CreateUserRequest {
   username: string;
   email: string;
@@ -198,6 +207,22 @@ class ApiClient {
     const response = await this.client.get<ApiResponse<null>>("/auth/verify", {
       params: { token },
     });
+    return response.data;
+  }
+
+  async forgotPassword(email: string): Promise<ApiResponse<null>> {
+    const response = await this.client.post<ApiResponse<null>>(
+      "/auth/forgot-password",
+      { email },
+    );
+    return response.data;
+  }
+
+  async resetPassword(data: ResetPasswordRequest): Promise<ApiResponse<null>> {
+    const response = await this.client.post<ApiResponse<null>>(
+      "/auth/reset-password",
+      data,
+    );
     return response.data;
   }
 
