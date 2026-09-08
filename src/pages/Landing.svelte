@@ -213,21 +213,43 @@
           <a
             href="/login"
             use:link
-            class="group inline-flex items-center justify-center px-8 py-4 bg-[#fde047] hover:bg-[#facc15] border-4 border-black text-black font-black text-base uppercase tracking-wider rounded-xl shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_rgba(0,0,0,1)] active:translate-x-1.5 active:translate-y-1.5 transition-all cursor-pointer"
+            class="group inline-flex items-center justify-center px-7 py-4 bg-[#fde047] hover:bg-[#facc15] border-4 border-black text-black font-black text-sm sm:text-base uppercase tracking-wider rounded-xl shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_rgba(0,0,0,1)] active:translate-x-1.5 active:translate-y-1.5 transition-all cursor-pointer"
           >
-            <span>Log In to Admin Portal</span>
+            <span>Log In to Portal</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="2.5"
               stroke="currentColor"
-              class="w-5 h-5 ml-2.5 group-hover:translate-x-1 transition-transform"
+              class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+              />
+            </svg>
+          </a>
+
+          <a
+            href="/register"
+            use:link
+            class="group inline-flex items-center justify-center px-7 py-4 bg-[#86efac] hover:bg-[#4ade80] border-4 border-black text-black font-black text-sm sm:text-base uppercase tracking-wider rounded-xl shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_rgba(0,0,0,1)] active:translate-x-1.5 active:translate-y-1.5 transition-all cursor-pointer"
+          >
+            <span>Register</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2.5"
+              stroke="currentColor"
+              class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
               />
             </svg>
           </a>

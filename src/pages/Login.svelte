@@ -201,11 +201,33 @@
           {/if}
         </button>
 
-        <div class="text-center pt-3">
+        <div class="pt-3 flex flex-col items-center gap-2.5">
+          <div class="text-xs font-bold text-black/80">
+            Don't have an account?
+            <a
+              href="/register"
+              use:link
+              class="font-black text-black underline hover:text-black/70 ml-1"
+            >
+              Register here
+            </a>
+          </div>
+
+          <div class="text-xs font-bold text-black/60">
+            Need to verify email?
+            <a
+              href="/verify-email"
+              use:link
+              class="font-black text-black underline hover:text-black/70 ml-1"
+            >
+              Verify Token
+            </a>
+          </div>
+
           <a
             href="/"
             use:link
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-gray-100 border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)] text-xs font-black uppercase tracking-wider text-black transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
+            class="mt-1 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-gray-100 border-2 border-black rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,1)] text-xs font-black uppercase tracking-wider text-black transition-all hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none"
           >
             &larr; Back to Landing Page
           </a>

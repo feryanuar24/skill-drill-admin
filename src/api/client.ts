@@ -18,6 +18,12 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  password: string;
+}
+
 export interface LoginResponse {
   token: string;
   user: {
@@ -25,6 +31,17 @@ export interface LoginResponse {
     username: string;
     email: string;
     role: string;
+  };
+}
+
+export interface RegisterResponse {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    is_verified?: boolean;
+    created_at?: string;
   };
 }
 
@@ -167,6 +184,21 @@ class ApiClient {
       },
     );
     return response.data.data;
+  }
+
+  async register(data: RegisterRequest): Promise<RegisterResponse> {
+    const response = await this.client.post<ApiResponse<RegisterResponse>>(
+      "/auth/register",
+      data,
+    );
+    return response.data.data;
+  }
+
+  async verifyEmail(token: string): Promise<ApiResponse<null>> {
+    const response = await this.client.get<ApiResponse<null>>("/auth/verify", {
+      params: { token },
+    });
+    return response.data;
   }
 
   async logout(): Promise<void> {
