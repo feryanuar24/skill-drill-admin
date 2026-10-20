@@ -6,11 +6,50 @@ import { replace } from "../stores/routerCompat";
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total_items: number;
+  total_pages: number;
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   message: string;
   data: T;
+  pagination?: PaginationMeta;
   errors?: Record<string, string[]>;
+}
+
+export interface UserQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  role?: string;
+  is_verified?: boolean;
+  sort_by?: string;
+  order?: "asc" | "desc";
+  all?: boolean;
+}
+
+export interface TopicQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sort_by?: string;
+  order?: "asc" | "desc";
+  all?: boolean;
+}
+
+export interface QuestionQueryParams {
+  page?: number;
+  limit?: number;
+  topic_id?: number;
+  search?: string;
+  correct_answer?: string;
+  sort_by?: string;
+  order?: "asc" | "desc";
+  all?: boolean;
 }
 
 export interface LoginRequest {
@@ -232,8 +271,11 @@ class ApiClient {
   }
 
   // User endpoints
-  async getUsers(): Promise<User[]> {
-    const response = await this.client.get<ApiResponse<User[]>>("/users");
+  async getUsers(params?: UserQueryParams): Promise<User[]> {
+    const finalParams = params !== undefined ? params : { all: true };
+    const response = await this.client.get<ApiResponse<User[]>>("/users", {
+      params: finalParams,
+    });
     return response.data.data;
   }
 
@@ -263,8 +305,11 @@ class ApiClient {
   }
 
   // Topic endpoints
-  async getTopics(): Promise<Topic[]> {
-    const response = await this.client.get<ApiResponse<Topic[]>>("/topics");
+  async getTopics(params?: TopicQueryParams): Promise<Topic[]> {
+    const finalParams = params !== undefined ? params : { all: true };
+    const response = await this.client.get<ApiResponse<Topic[]>>("/topics", {
+      params: finalParams,
+    });
     return response.data.data;
   }
 
@@ -297,13 +342,29 @@ class ApiClient {
   }
 
   // Question endpoints
-  async getQuestions(topicId?: number, search?: string): Promise<Question[]> {
-    const params: Record<string, string> = {};
-    if (topicId) {
-      params.topic_id = topicId.toString();
-    }
-    if (search && search.trim()) {
-      params.search = search.trim();
+  async getQuestions(
+    topicIdOrParams?: number | QuestionQueryParams,
+    search?: string,
+  ): Promise<Question[]> {
+    let params: Record<string, any> = {};
+    if (typeof topicIdOrParams === "number") {
+      params.all = true;
+      if (topicIdOrParams > 0) {
+        params.topic_id = topicIdOrParams;
+      }
+      if (search && search.trim()) {
+        params.search = search.trim();
+      }
+    } else if (
+      typeof topicIdOrParams === "object" &&
+      topicIdOrParams !== null
+    ) {
+      params = { ...topicIdOrParams };
+    } else {
+      params = { all: true };
+      if (search && search.trim()) {
+        params.search = search.trim();
+      }
     }
     const response = await this.client.get<ApiResponse<Question[]>>(
       "/questions",
