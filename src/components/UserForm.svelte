@@ -11,6 +11,7 @@
     email: "",
     password: "",
     role: "student",
+    is_verified: false,
   };
 
   let errors: Record<string, string> = {};
@@ -25,6 +26,7 @@
         email: user.email || "",
         password: "",
         role: user.role ? user.role.toLowerCase() : "student",
+        is_verified: user.is_verified ?? false,
       };
     }
   } else if (currentUserId !== null) {
@@ -34,6 +36,7 @@
       email: "",
       password: "",
       role: "student",
+      is_verified: false,
     };
   }
 
@@ -62,9 +65,9 @@
       return;
     }
 
-    const submitData = { ...formData };
+    const submitData: any = { ...formData };
     if (user && !submitData.password) {
-      delete (submitData as any).password;
+      delete submitData.password;
     }
 
     dispatch("submit", submitData);
@@ -189,6 +192,22 @@
         >
           <option value="student">Student</option>
           <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          for="is_verified"
+          class="block text-xs font-black uppercase tracking-wider text-black mb-1.5"
+          >Verified Status</label
+        >
+        <select
+          id="is_verified"
+          bind:value={formData.is_verified}
+          class="w-full px-3.5 py-2.5 bg-[#fef9c3]/30 focus:bg-white border-2 border-black rounded-xl text-sm font-bold text-black focus:outline-none focus:shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-all"
+        >
+          <option value={true}>Verified (True)</option>
+          <option value={false}>Unverified (False)</option>
         </select>
       </div>
 

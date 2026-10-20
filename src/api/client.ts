@@ -96,8 +96,17 @@ export interface ResetPasswordRequest {
 export interface CreateUserRequest {
   username: string;
   email: string;
-  password: string;
+  password?: string;
   role: string;
+  is_verified?: boolean;
+}
+
+export interface UpdateUserRequest {
+  username?: string;
+  email?: string;
+  password?: string;
+  role?: string;
+  is_verified?: boolean;
 }
 
 export interface User {
@@ -291,7 +300,7 @@ class ApiClient {
 
   async updateUser(
     id: number,
-    data: Partial<CreateUserRequest>,
+    data: UpdateUserRequest,
   ): Promise<User> {
     const response = await this.client.put<ApiResponse<User>>(
       `/users/${id}`,
