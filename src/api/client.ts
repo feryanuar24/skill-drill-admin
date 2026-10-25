@@ -298,10 +298,7 @@ class ApiClient {
     return response.data.data;
   }
 
-  async updateUser(
-    id: number,
-    data: UpdateUserRequest,
-  ): Promise<User> {
+  async updateUser(id: number, data: UpdateUserRequest): Promise<User> {
     const response = await this.client.put<ApiResponse<User>>(
       `/users/${id}`,
       data,
@@ -426,15 +423,11 @@ class ApiClient {
       formData.append("file_pdf", file);
     }
 
-    const response = await this.client.post(
-      "/admin/generate-questions",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    const response = await this.client.post("/questions/generate", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    );
+    });
     return response.data.data;
   }
 }
