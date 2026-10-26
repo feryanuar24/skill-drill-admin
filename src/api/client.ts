@@ -282,10 +282,21 @@ class ApiClient {
   // User endpoints
   async getUsers(params?: UserQueryParams): Promise<User[]> {
     const finalParams = params !== undefined ? params : { all: true };
+    const res = await this.getUsersPaginated(finalParams);
+    return res.users;
+  }
+
+  async getUsersPaginated(params?: UserQueryParams): Promise<{
+    users: User[];
+    pagination?: PaginationMeta;
+  }> {
     const response = await this.client.get<ApiResponse<User[]>>("/users", {
-      params: finalParams,
+      params,
     });
-    return response.data.data;
+    return {
+      users: response.data.data || [],
+      pagination: response.data.pagination,
+    };
   }
 
   async getUserById(id: number): Promise<User> {
@@ -313,10 +324,21 @@ class ApiClient {
   // Topic endpoints
   async getTopics(params?: TopicQueryParams): Promise<Topic[]> {
     const finalParams = params !== undefined ? params : { all: true };
+    const res = await this.getTopicsPaginated(finalParams);
+    return res.topics;
+  }
+
+  async getTopicsPaginated(params?: TopicQueryParams): Promise<{
+    topics: Topic[];
+    pagination?: PaginationMeta;
+  }> {
     const response = await this.client.get<ApiResponse<Topic[]>>("/topics", {
-      params: finalParams,
+      params,
     });
-    return response.data.data;
+    return {
+      topics: response.data.data || [],
+      pagination: response.data.pagination,
+    };
   }
 
   async getTopicById(id: number): Promise<Topic> {
